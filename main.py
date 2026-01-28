@@ -1,11 +1,4 @@
 from models.Usuario import Usuario
-import mysql.connector
-connection = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    passwd="Lilica20!",
-    database="biblioteca"
-)
 def main():
     Usuario.carregar_usuarios()
     while True:
