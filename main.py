@@ -1,10 +1,13 @@
 from models.Usuario import Usuario
+from Testes import teste_conexao
 def main():
-    Usuario.carregar_usuarios()
+    teste_conexao.testar()
+    '''Usuario.carregar_usuarios()
     while True:
         print("1 - Adicionar usuario")
         print("2 - Procurar usuario")
         print("3 - Listar usuarios")
+        print(" 4 - Adicionar livro")
         print("0 - Sair")
 
         try:
@@ -40,6 +43,9 @@ def main():
                             print(f"{idx}. {user}")
                     else:
                         print("Nenhum usuário cadastrado")
+                case 4:
+                    Nome = input("Digite o nome do livro: ")
+
                 case 0:
                     break
 
@@ -49,6 +55,6 @@ def main():
         except ValueError:
             print("Erro: digite apenas números!")
 
-
+'''
 if __name__ == "__main__":
     main()
