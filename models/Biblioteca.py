@@ -1,4 +1,6 @@
 from Usuario import Usuario
+from database import ConnectionFactory
+
 class Biblioteca:
     arquivo = "Livros.csv"
     lista_livro = []
@@ -15,10 +17,28 @@ class Biblioteca:
         }
         return lista_livro
     @classmethod
-    def salvar_livro(cls):
-        with open(cls.arquivo, "w", encoding="utf-8") as f:
-            for registro in cls.lista_livro:
-                f.write(f"{registro}\n")
+    def salvar_livro(cls, livro):
+        conn = ConnectionFactory.get_connection()
+        if not conn:
+            return False
+        try:
+            cursor = conn.cursor()
+            sql = """
+            INSERT INTO livros (id, titulo, ano, quantidade)
+            VALUES (%s, %s, %s, %s)
+            """
+            valores = (livro["ID"], livro["titulo"], livro["ano"], livro["quantidade"])
+            cursor.execute(sql, valores)
+            conn.commit()
+            print("Livro salvo com sucesso")
+            return True
+        except Exception as e:
+            print(f"Erro na salvar livro: {e}")
+            return False
+        finally:
+            if conn.is_connected():
+                cursor.close()
+                conn.close()
     def mostrar_livro(self):
         print(f"Titulo: {self.titulo}, id: {self.livro_id}, ano: {self.ano}")
     def disponibilidade(self):
