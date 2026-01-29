@@ -1,13 +1,17 @@
-from models.Usuario import Usuario
-from Testes import teste_conexao
+from model.Usuario import Usuario
+from model.Livro import Livro
+from dao.LivroDAO import LivroDAO
+from dao.UsuarioDAO import UsuarioDAO
+from database.ConnectionFactory import ConnectionFactory
+
 def main():
-    teste_conexao.testar()
-    '''Usuario.carregar_usuarios()
+    # ConnectionFactory.testar() # APENAS PARA TESTES
+    UsuarioDAO.carregar_usuarios()
     while True:
         print("1 - Adicionar usuario")
         print("2 - Procurar usuario")
         print("3 - Listar usuarios")
-        print(" 4 - Adicionar livro")
+        print("4 - Adicionar livro")
         print("0 - Sair")
 
         try:
@@ -44,7 +48,16 @@ def main():
                     else:
                         print("Nenhum usuário cadastrado")
                 case 4:
-                    Nome = input("Digite o nome do livro: ")
+                    titulo = input("Digite o título do livro: ")
+                    ano = input("Digite o ano: ")
+                    quantidade = input("Digite a quantidade: ")
+
+                    if not ano.isdigit() or not quantidade.isdigit():
+                        print("Ano e quantidade devem ser números.")
+                        break
+
+                    livro = Livro(None, titulo, int(ano), int(quantidade))
+                    LivroDAO.salvar_livro(livro)
 
                 case 0:
                     break
@@ -55,6 +68,6 @@ def main():
         except ValueError:
             print("Erro: digite apenas números!")
 
-'''
+
 if __name__ == "__main__":
     main()

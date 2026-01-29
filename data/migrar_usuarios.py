@@ -1,11 +1,13 @@
 import json
+import os
+
 import mysql.connector
 
 # 1️⃣ Conectar ao MySQL
 conn = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="Lilica20!",
+    password=os.getenv("DB_PASSWORD"),
     database="biblioteca"
 )
 
