@@ -2,12 +2,11 @@ import mysql.connector
 import os  # Biblioteca para ler variáveis do sistema
 from mysql.connector import Error
 
-
 class ConnectionFactory:
     # As configurações agora buscam a senha do ambiente
     _config = {
         'host': 'localhost',
-        'database': 'biblioteca_db',
+        'database': 'biblioteca', # a minha é assim
         'user': 'root',
         'password': os.getenv('DB_PASSWORD')  # Busca a senha configurada no PyCharm
     }
@@ -22,3 +21,12 @@ class ConnectionFactory:
         except Error as e:
             print(f"Erro ao conectar ao MySQL: {e}")
             return None
+
+    @classmethod
+    def testar(cls):
+        conn = ConnectionFactory.get_connection()
+        if conn:
+            print("Conexão estabelecida com sucesso!")
+            conn.close()
+        else:
+            print("Falha na conexão. Verifique se o nome do banco 'biblioteca_db' existe no Workbench.")

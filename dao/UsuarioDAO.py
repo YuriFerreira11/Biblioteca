@@ -1,11 +1,12 @@
 import os
 import json
-class Usuario:
+from model.Usuario import Usuario
+
+class UsuarioDAO:
+
     lista = []
     arquivo = "Nomes.json"
-    def __init__(self, nome, idade):
-        self.nome = nome
-        self.idade = idade
+
     @classmethod
     def carregar_usuarios(cls):
         if os.path.exists(cls.arquivo):
@@ -14,6 +15,7 @@ class Usuario:
                     cls.lista = json.load(f)
             except json.JSONDecodeError:
                 cls.lista = []
+
     @classmethod
     def gerar_id(cls):
         if not cls.lista:
@@ -21,6 +23,7 @@ class Usuario:
         ultimo_id = cls.lista[-1]["ID"]
         novo_id = int(ultimo_id) + 1
         return f"{novo_id:04d}"
+
     def registrar_usuario(self):
         if Usuario.procurar_usuario(self.nome):
             print("Usuário ja cadastrado")
@@ -45,9 +48,11 @@ class Usuario:
             if usuario["Nome"].lower() == chave_lower:
                 return usuario
         return None
+
     @classmethod
     def listar_usuarios(cls):
         return cls.lista
+
     @classmethod
     def verificar_usuario(cls, user_id):
         for usuario in cls.lista:
