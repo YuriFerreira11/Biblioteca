@@ -11,27 +11,19 @@ class login_funcoes():
         if not cpf.isdigit():
             return False, "CPF deve conter apenas números"
         return True, ""
+
     @staticmethod
-    def realizar_login(cpf: str) -> tuple[bool, str, str]:
-        '''
-        Realizar login com CPF
-
-        Args:
-        cpf: CPF do usuario
-
-        Returns:
-            Tupla(sucesso, mensagem, nome)
-        '''
+    def realizar_login(cpf: str, senha: str) -> tuple:
         valido, mensagem_erro = login_funcoes.validar_cpf(cpf)
         if not valido:
-            return False, mensagem_erro, ""
-        resultado = UsuarioDAO.verificar_usuario(cpf)
-        if resultado:
-            nome = resultado[1]
-            mensagem = f"Login realizado com sucesso! Bem vindo, {nome}"
-            return True, mensagem, nome
+            return False, mensagem_erro, "", False
+
+        sucesso, nome, admin = UsuarioDAO.verificar_usuario(cpf, senha)
+
+        if sucesso:
+            return True, f"Bem vindo, {nome}!", nome, admin
         else:
-            return False, "CPF não encontrado", ""
+            return False, "CPF ou senha inválidos", "", False
     @staticmethod
     def validar_tecla(texto_atual: str, tamanho_selecao: int, tecla: str, char: str) -> bool:
         '''

@@ -2,8 +2,7 @@ from ui.login_ui import LoginUI
 from database.ConnectionFactory import ConnectionFactory
 
 def main():
-    ConnectionFactory.testar()  # opcional, só debug
-
+    ConnectionFactory.testar()
     tela = LoginUI()
     tela.executar()
 
