@@ -1,0 +1,5 @@
+pillow~=10.2.0
+bcrypt~=3.2.2
+mysql-connector-python~=8.3.0
+yoyo-migrations~=8.2.0
+customtkinter~=5.2.2
